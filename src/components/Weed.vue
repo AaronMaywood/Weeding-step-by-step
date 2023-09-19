@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue';
-import { state } from '../store.js';
+import { state, weeding } from '../store.js';
 const props = defineProps({
 	x: Number,
 	y: Number,
@@ -11,7 +11,7 @@ const grass = computed(() => {
 </script>
 
 <template>
-	<td :class="grass">{{grass}}</td>
+	<td @click="weeding(x,y)" :class="grass">{{grass}}</td>
 </template>
 
 <style scoped>

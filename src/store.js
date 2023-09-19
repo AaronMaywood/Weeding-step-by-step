@@ -9,3 +9,11 @@ export const state = ref([
 	[0,0,0,0,0],
 	[0,0,0,0,0],
 ]);
+
+// 除草する
+export function weeding(x,y){
+	state.value[x][y]--;
+	if( state.value[x][y] < 0 ){
+		state.value[x][y] = 0;
+	}
+}
