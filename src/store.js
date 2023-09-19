@@ -13,12 +13,22 @@ export function isGameClear(){
 const X_MAX = 5;
 const Y_MAX = 5;
 export const state = ref([
-	[0,1,2,3,0], // 試験用に1,2,3を入れて画面上に草が生えるのを確認する
+	[0,0,0,0,0],
 	[0,0,0,0,0],
 	[0,0,0,0,0],
 	[0,0,0,0,0],
 	[0,0,0,0,0],
 ]);
+
+// ゲーム開始時にランダムに草を生やす
+export function gameStart(){
+	gameState.value = 0;
+	for(let i=0 ; i<30 ; i++){
+		const x = Math.floor(Math.random() * X_MAX);
+		const y = Math.floor(Math.random() * Y_MAX);
+		grow(x,y);
+	}
+}
 
 // 除草する
 export function weeding(x,y){

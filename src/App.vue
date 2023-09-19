@@ -1,6 +1,7 @@
 <script setup>
 import Garden from './components/Garden.vue';
-import { isGameClear } from './store.js';
+import { gameStart, isGameClear } from './store.js';
+gameStart();
 </script>
 
 <template>
