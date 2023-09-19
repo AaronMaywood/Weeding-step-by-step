@@ -1,13 +1,17 @@
 <script setup>
+import { computed } from 'vue';
+import { state } from '../store.js';
 const props = defineProps({
 	x: Number,
 	y: Number,
 });
+const grass = computed(() => {
+	return ['','v','w','W'][state.value[props.x][props.y]];
+});
 </script>
 
 <template>
-	<!-- x, y プロパティが正しく渡されているかを確認するため、画面に表示する -->
-	<td :class="grass">{{x}}{{y}}</td>
+	<td :class="grass">{{grass}}</td>
 </template>
 
 <style scoped>
@@ -19,5 +23,14 @@ td {
 	font-size: 6rem;
 	text-align: center;
 	background: #ffaa00;
+}
+.v {
+	background: #00ee00;
+}
+.w {
+	background: #00bb00;
+}
+.W {
+	background: #008800;
 }
 </style>
