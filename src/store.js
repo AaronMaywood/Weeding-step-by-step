@@ -30,12 +30,25 @@ export const state = ref([
 
 // ゲーム開始時にランダムに草を生やす
 export function gameStart(){
+	state.value = [
+		[0,0,0,0,0],
+		[0,0,0,0,0],
+		[0,0,0,0,0],
+		[0,0,0,0,0],
+		[0,0,0,0,0],
+	];
 	gameState.value = 0;
 	for(let i=0 ; i<30 ; i++){
 		const x = Math.floor(Math.random() * X_MAX);
 		const y = Math.floor(Math.random() * Y_MAX);
 		grow(x,y);
 	}
+	requestAnimationFrame(update);
+}
+
+// ゲームクリアー、ゲームオーバーになったあと、ゲームを再プレイする
+export function gameRestart(){
+	gameStart();
 }
 
 // 除草する
@@ -121,8 +134,6 @@ function update(){
 
 	requestAnimationFrame(update);
 }
-
-requestAnimationFrame(update);
 
 // 上下左右の方向に草があるかを調べる
 function upper(x,y){
