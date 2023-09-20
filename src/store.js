@@ -10,6 +10,14 @@ export function isGameClear(){
 	return gameState.value === 1;
 }
 
+function gameOver(){
+	gameState.value = 2;
+}
+
+export function isGameOver(){
+	return gameState.value === 2;
+}
+
 const X_MAX = 5;
 const Y_MAX = 5;
 export const state = ref([
@@ -32,6 +40,9 @@ export function gameStart(){
 
 // 除草する
 export function weeding(x,y){
+	// ゲーム終了になったら以後更新をストップ
+	if (isGameClear() || isGameOver() ) return;
+
 	state.value[x][y]--;
 	if( state.value[x][y] < 0 ){
 		state.value[x][y] = 0;
@@ -50,7 +61,7 @@ function grow(x,y){
 let counter = 0;
 function update(){
 	// ゲームクリアーになったら以後更新をストップ
-	if (isGameClear()) return;
+	if (isGameClear() || isGameOver() ) return;
 
 	// 1. ランダムに空き地に草が生える
 	if( Math.random() > 0.985 ){
@@ -82,7 +93,7 @@ function update(){
 		state.value = JSON.parse(JSON.stringify(next));
 	}
 
-	// 3. もし、草が一本もなくなったらゲームクリアー
+	// 3. もし、草が一本もなくなったらゲームクリアー（勝ち）
 	let grassCounter = 0;
 	for(let x=0 ; x < X_MAX ; x++){
 		for(let y=0 ; y < Y_MAX ; y++){
@@ -93,6 +104,19 @@ function update(){
 	}
 	if(grassCounter === 0){
 		gameClear();
+	}
+
+	// 4. もし、全てのマス目に草が茂ったらゲームオーバー（負け）
+	let grassCounter2 = 0;
+	for(let x=0 ; x < X_MAX ; x++){
+		for(let y=0 ; y < Y_MAX ; y++){
+			if( state.value[x][y] === 0 ){
+				grassCounter2++;
+			}
+		}
+	}
+	if(grassCounter2 === 0){
+		gameOver();
 	}
 
 	requestAnimationFrame(update);
