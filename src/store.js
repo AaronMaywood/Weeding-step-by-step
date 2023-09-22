@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 export const gameState = ref(0);
 
@@ -6,17 +6,17 @@ function gameClear(){
 	gameState.value = 1;
 }
 
-export function isGameClear(){
+export const isGameClear = computed(()=>{
 	return gameState.value === 1;
-}
+});
 
 function gameOver(){
 	gameState.value = 2;
 }
 
-export function isGameOver(){
+export const isGameOver = computed(()=>{
 	return gameState.value === 2;
-}
+});
 
 const X_MAX = 5;
 const Y_MAX = 5;
@@ -74,7 +74,7 @@ function grow(x,y){
 let counter = 0;
 function update(){
 	// ゲームクリアーになったら以後更新をストップ
-	if (isGameClear() || isGameOver() ) return;
+	if (isGameClear.value || isGameOver.value ) return;
 
 	// 1. ランダムに空き地に草が生える
 	if( Math.random() > 0.985 ){

@@ -7,14 +7,14 @@ gameStart();
 <template>
 	<h1>草むしり</h1>
 	<Garden />
-	<p class="clear" v-if="isGameClear()">GAME CLEAR!</p>
-	<p class="over" v-if="isGameOver()">GAME OVER!</p>
+	<p class="clear" v-if="isGameClear">GAME CLEAR!</p>
+	<p class="over" v-if="isGameOver">GAME OVER!</p>
 	<!--
 	ボタンをフワーッと表示させる効果を付けるために、<Transition> を使用しました。
 	https://ja.vuejs.org/guide/built-ins/transition.html より
    	-->
 	<Transition>
-		<button class="replay" @click="gameRestart()" v-if="isGameOver() || isGameClear()">再度プレイする</button>
+		<button class="replay" @click="gameRestart()" v-if="isGameOver || isGameClear">再度プレイする</button>
 	</Transition>
 </template>
 
